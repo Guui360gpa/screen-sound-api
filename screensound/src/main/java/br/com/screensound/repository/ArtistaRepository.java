@@ -1,7 +1,6 @@
 package br.com.screensound.repository;
 
-import br.com.screensound.models.Artista;
-import br.com.screensound.models.TipoArtista;
+import br.com.screensound.artista.Artista;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,8 +9,11 @@ import java.util.Optional;
 
 public interface ArtistaRepository extends JpaRepository<Artista, Long> {
 
-    @Query("SELECT a FROM Artista a WHERE a.categoria = :tipoArtista")
-    List<Artista> buscarPorCategoria(TipoArtista tipoArtista);
+    @Query("SELECT a FROM Artista a WHERE a.estiloMusical = :estilo")
+    List<Artista> buscarPorEstilo(String estilo);
+
+    @Query("SELECT DISTINCT a.estiloMusical FROM Artista a")
+    List<String> listarEstilosMusicais();
 
     Optional<Artista> findByNomeIgnoreCase(String nome);
 }

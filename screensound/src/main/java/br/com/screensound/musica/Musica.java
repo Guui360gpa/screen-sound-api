@@ -1,5 +1,6 @@
-package br.com.screensound.models;
+package br.com.screensound.musica;
 
+import br.com.screensound.artista.Artista;
 import jakarta.persistence.*;
 
 @Entity

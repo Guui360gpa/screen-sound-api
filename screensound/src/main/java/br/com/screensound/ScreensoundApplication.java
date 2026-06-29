@@ -13,10 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ScreensoundApplication implements CommandLineRunner {
 
 	@Autowired
-	private ArtistaRepository artistaRepository;
-
-	@Autowired
-	private MusicaRepository musicaRepository;
+	private MenuController menuController;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ScreensoundApplication.class, args);
@@ -24,7 +21,8 @@ public class ScreensoundApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		MenuController menuController = new MenuController(artistaRepository,musicaRepository);
-		menuController.menu();
+
+		menuController.main();
+
 	}
 }

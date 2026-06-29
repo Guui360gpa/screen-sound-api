@@ -1,6 +1,6 @@
 package br.com.screensound.repository;
 
-import br.com.screensound.models.Musica;
+import br.com.screensound.musica.Musica;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
