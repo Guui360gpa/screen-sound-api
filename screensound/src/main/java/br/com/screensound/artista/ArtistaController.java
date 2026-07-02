@@ -42,7 +42,7 @@ public class ArtistaController {
 
             switch (opcao){
                 case 1:
-                    buscarArtista.buscarArtista();
+                    buscarArtista.printarArtista();
                     break;
                 case 2:
                     listarArtistaPorEstilo.listar();

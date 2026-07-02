@@ -44,36 +44,32 @@ public class Artista {
 
     public Artista(){}
 
-    public long getId() {
-        return id;
+    public String getEstiloMusical() {
+        return estiloMusical;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public String getAnoFormacao() {
+        return anoFormacao;
+    }
+
+    public String getBiografia() {
+        return biografia;
+    }
+
+    public String getUrlPoster() {
+        return urlPoster;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCategoriaArtista() {
-        return estiloMusical;
-    }
-
-    public void setCategoriaArtista(String estiloMusical) {
-        this.estiloMusical = estiloMusical;
-    }
-
     public List<Musica> getMusicas() {
         return musicas;
-    }
-
-    public void setMusicas(List<Musica> musicas) {
-        this.musicas = musicas;
     }
 
     @Override

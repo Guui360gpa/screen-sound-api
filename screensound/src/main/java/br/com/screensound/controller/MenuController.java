@@ -8,7 +8,7 @@ import java.util.Scanner;
 @Controller
 public class MenuController {
 
-    private int opcao;
+    private int opcao = 1;
     private Scanner read = new Scanner(System.in);
 
     @Autowired
@@ -17,7 +17,7 @@ public class MenuController {
     public void Menu() {}
 
     public void main(){
-        while(true){
+        while(opcao != 0){
             System.out.println("-----------------------");
             System.out.println("    Screen Sound       ");
             System.out.println("-----------------------");

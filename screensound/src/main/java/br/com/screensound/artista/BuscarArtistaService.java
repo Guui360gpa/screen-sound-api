@@ -1,5 +1,6 @@
 package br.com.screensound.artista;
 
+import br.com.screensound.exception.ArtistaNaoEncontradoException;
 import br.com.screensound.repository.ArtistaRepository;
 import br.com.screensound.service.ConsumoAPI;
 import br.com.screensound.service.ConverteDados;
@@ -7,7 +8,6 @@ import br.com.screensound.service.UrlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -20,33 +20,37 @@ public class BuscarArtistaService {
     private ConverteDados converteDados = new ConverteDados();
     private final String ENDERECO = "https://www.theaudiodb.com/api/v1/json/123/search.php?s=";
     private List<DadosArtista> dadosArtistas;
+    private String nomeArtista;
 
     @Autowired
     private ArtistaRepository artistaRepository;
 
 
-    public void buscarArtista(){
-        var cadastrarNovo = "s";
+    public Optional<Artista> buscarArtista() {
+        System.out.println("Digite o nome de Artista:");
+        nomeArtista = read.nextLine();
 
-        while (true){
-            System.out.println("Digite o nome de Artista:");
-            var nomeArtista = read.nextLine();
+        return artistaRepository.findByNomeIgnoreCase(nomeArtista);
+    }
 
-            Optional<Artista> artistaEncontrado = artistaRepository.findByNomeIgnoreCase(nomeArtista);
 
-            if (artistaEncontrado.isPresent()){
-                System.out.println(encontrarArtistaNoBanco(artistaEncontrado.get()));
+
+    public void printarArtista(){
+        String cadastrarNovo = "";
+        while (!cadastrarNovo.equalsIgnoreCase("n")){
+            if(buscarArtista().isPresent()){
+                System.out.println(encontrarArtistaNoBanco(buscarArtista().get()));
             }else {
-                System.out.println(encontrarArtistaNaAPI(UrlUtils.formatarArtista(nomeArtista)));
+                try {
+                    System.out.println(encontrarArtistaNaAPI(UrlUtils.formatarArtista(nomeArtista)));
+                }catch (ArtistaNaoEncontradoException ex){
+                    System.out.println(ex.getMessage());
+                }
+
             }
             System.out.println("Deseja continuar? (s/n)");
             cadastrarNovo = read.nextLine();
-
-            if (cadastrarNovo.equalsIgnoreCase("n")){
-                break;
-            }
         }
-
     }
 
     private Artista encontrarArtistaNoBanco(Artista artista){
@@ -60,8 +64,7 @@ public class BuscarArtistaService {
             ArtistaResposta artistaResposta = converteDados.obterDados(json, ArtistaResposta.class);
 
             if (artistaResposta.artists() == null || artistaResposta.artists().isEmpty()) {
-                System.out.println("Artista não encontrado na API!");
-                return null;
+                throw new ArtistaNaoEncontradoException("Artista não encontrado!");
             }
 
             DadosArtista dadosArtista = artistaResposta.artists().get(0);
@@ -83,10 +86,7 @@ public class BuscarArtistaService {
     }
 
     private boolean jsonExiste(String json){
-        if (json == null || json.isEmpty()){
-            System.out.println("Artista não encontrado!");
-            return false;
-        }
-        return true;
+        return json != null && !json.isEmpty();
     }
 }
+
