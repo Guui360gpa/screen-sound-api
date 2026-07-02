@@ -38,8 +38,9 @@ public class BuscarArtistaService {
     public void printarArtista(){
         String cadastrarNovo = "";
         while (!cadastrarNovo.equalsIgnoreCase("n")){
-            if(buscarArtista().isPresent()){
-                System.out.println(encontrarArtistaNoBanco(buscarArtista().get()));
+            Optional<Artista> artistaOpt = buscarArtista();
+            if(artistaOpt.isPresent()){
+                System.out.println(encontrarArtistaNoBanco(artistaOpt.get()));
             }else {
                 try {
                     System.out.println(encontrarArtistaNaAPI(UrlUtils.formatarArtista(nomeArtista)));

@@ -1,9 +1,6 @@
 package br.com.screensound;
 
 import br.com.screensound.controller.MenuController;
-import br.com.screensound.repository.ArtistaRepository;
-import br.com.screensound.repository.MusicaRepository;
-import com.sun.tools.javac.Main;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
